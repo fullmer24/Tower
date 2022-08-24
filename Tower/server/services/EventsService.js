@@ -23,8 +23,9 @@ class EventsService {
     async editEvent(id, eventData) {
 
         const event = await this.getById(id)
-
-
+        if (event.isCanceled != false) {
+            throw new BadRequest('This event is cancelled.')
+        }
         // event.creatorId = eventData.creatorId || event.creatorId
         event.name = eventData.name || event.name
         event.description = eventData.description || event.description
@@ -37,6 +38,18 @@ class EventsService {
         await event.save()
         return eventData
     }
+
+    async cancel(id, userId) {
+        const event = await this.getById(id)
+        // @ts-ignore
+        if (event.creatorId.toString() != userId) {
+            throw new Forbidden("You don't have permission to delete that")
+        }
+        event.isCanceled = true
+        await event.save()
+        return `event ${event.name} was cancelled`
+    }
+
 
 
 }
