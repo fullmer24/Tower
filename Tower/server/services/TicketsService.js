@@ -14,9 +14,18 @@ class TicketsService {
         return ticket
     }
 
+    async getEventTickets(eventId) {
+        const tickets = await dbContext.Tickets.find({ eventId })
+            .populate('profile', 'name picture')
+        return tickets
+    }
+    async getMyTickets(accountId) {
+        const tickets = await dbContext.Tickets.find({ accountId })
+            .populate('event')
+        return tickets
+    }
 
-
-
+    // event.capacity += 1 
 
 }
 
