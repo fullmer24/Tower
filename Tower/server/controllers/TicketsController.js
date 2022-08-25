@@ -21,7 +21,7 @@ export class TicketsController extends BaseController {
             let ticket = await ticketsService.create(req.body)
             return res.send(ticket)
         } catch (error) {
-            next.error(error)
+            next(error)
         }
     }
 
@@ -30,7 +30,7 @@ export class TicketsController extends BaseController {
             const ticket = await ticketsService.remove(req.params.id, req.userInfo.id)
             return res.send(ticket)
         } catch (error) {
-            next.error(error)
+            next(error)
         }
     }
 

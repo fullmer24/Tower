@@ -1,4 +1,5 @@
 import { Auth0Provider } from "@bcwdev/auth0provider";
+import { commentsService } from "../services/CommentsService.js";
 import { eventsService } from "../services/EventsService.js";
 import { ticketsService } from "../services/TicketsService.js";
 import BaseController from "../utils/BaseController.js";
@@ -9,6 +10,7 @@ export class EventsController extends BaseController {
         this.router
             .get('', this.getAll)
             .get('/:id', this.getById)
+            .get('/:id/comments', this.getAllComments)
             .use(Auth0Provider.getAuthorizedUserInfo)
             .post('', this.create)
             .put('/:eventId', this.editEvent)
@@ -17,13 +19,22 @@ export class EventsController extends BaseController {
 
     }
 
+    async getAllComments(req, res, next) {
+        try {
+            const comments = await commentsService.getAllComments(req.params.id)
+            return res.send(comments)
+        } catch (error) {
+            next.error(error)
+        }
+    }
+
     async create(req, res, next) {
         try {
             req.body.creatorId = req.userInfo.id
             const event = await eventsService.create(req.body)
             return res.send(event)
         } catch (error) {
-            next.error(error)
+            next(error)
         }
     }
 
@@ -47,9 +58,9 @@ export class EventsController extends BaseController {
 
     async editEvent(req, res, next) {
         try {
-            req.body.creatorId = req.userInfo.id
+            // req.body.creatorId = req.userInfo.id
             let eventData = req.body
-            let event = await eventsService.editEvent(req.params.eventId, eventData)
+            let event = await eventsService.editEvent(req.params.eventId, eventData, req.userInfo.id)
             res.send(event)
         }
         catch (error) {
@@ -62,7 +73,7 @@ export class EventsController extends BaseController {
             const message = await eventsService.cancel(req.params.id, req.userInfo.id)
             return res.send(message)
         } catch (error) {
-            next.error(error)
+            next(error)
         }
     }
 

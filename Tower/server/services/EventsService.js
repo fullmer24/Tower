@@ -20,20 +20,21 @@ class EventsService {
         return event
     }
 
-    async editEvent(id, eventData) {
+    async editEvent(id, eventData, userId) {
 
         const event = await this.getById(id)
         if (event.isCanceled != false) {
             throw new BadRequest('This event is cancelled.')
         }
-        // event.creatorId = eventData.creatorId || event.creatorId
+        if (event.creatorId != userId) {
+            throw new BadRequest('you can not do that')
+        }
         event.name = eventData.name || event.name
         event.description = eventData.description || event.description
         event.coverImg = eventData.coverImg || event.coverImg
         event.location = eventData.location || event.location
         event.capacity = eventData.capacity || event.capacity
         event.startDate = eventData.startDate || event.startDate
-        // event.isCanceled = eventData.isCanceled || event.isCanceled
         event.type = eventData.type || event.type
         await event.save()
         return eventData

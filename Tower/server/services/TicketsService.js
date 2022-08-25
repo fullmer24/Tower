@@ -5,7 +5,12 @@ import { eventsService } from "./EventsService.js"
 
 class TicketsService {
     async create(body) {
+
         const event = await dbContext.Events.findById(body.eventId)
+        // @ts-ignore
+        if (event.capacity == 0) {
+            throw new BadRequest('no tickets available')
+        }
         const ticket = await dbContext.Tickets.create(body)
         // @ts-ignore
         event.capacity -= 1
