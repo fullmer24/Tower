@@ -1,4 +1,6 @@
 import { dbContext } from "../db/DbContext.js"
+import { BadRequest, Forbidden } from "../utils/Errors.js"
+import { eventsService } from "./EventsService.js"
 
 
 class TicketsService {
@@ -25,7 +27,24 @@ class TicketsService {
         return tickets
     }
 
-    // event.capacity += 1 
+    async remove(ticketId, userId) {
+        const ticket = await dbContext.Tickets.findById(ticketId)
+            .populate('event')
+        if (!ticket) {
+            throw new BadRequest('no ticket at that id')
+        }
+        const event = await eventsService.getById(ticket.eventId)
+        // @ts-ignore
+        if (ticket.accountId.toString() != userId) {
+            throw new Forbidden('you can not remove that')
+        }
+
+        // @ts-ignore
+        event.capacity += 1
+        await event.save()
+        await ticket.remove()
+        return 'Ticket Cancelled'
+    }
 
 }
 
