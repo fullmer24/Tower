@@ -1,36 +1,57 @@
 <template>
-  <div class="home flex-grow-1 d-flex flex-column align-items-center justify-content-center">
-    <div class="home-card p-5 bg-white rounded elevation-3">
-      <img src="https://bcw.blob.core.windows.net/public/img/8600856373152463" alt="CodeWorks Logo" class="rounded-circle">
-      <h1 class="my-5 bg-dark text-white p-3 rounded text-center">
-        Vue 3 Starter
-      </h1>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <h2>EVENTS</h2>
+      </div>
+    </div>
+    <div class="row bg-dark text-light">
+      <div class="col-12">
+        filter <i class="mdi mdi-filter"></i>
+      </div>
+      <div class="col-2 btn btn-outline-light rounded-pill" @click="filterTerm = ''">All</div>
+      <div class="col-2 btn btn-outline-light rounded-pill" @click="filterTerm = 'concert'">Concert</div>
+      <div class="col-2 btn btn-outline-light rounded-pill" @click="filterTerm = 'convention'">Convention</div>
+      <div class="col-2 btn btn-outline-light rounded-pill" @click="filterTerm = 'sport'">Sport</div>
+      <div class="col-2 btn btn-outline-light rounded-pill" @click="filterTerm = 'digital'">Digital</div>
+    </div>
+    <div class="bg-dark">
+      <div class="" v-for="e in events" :key="e.id">
+        <EventCard :event="e" />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'Home'
-}
-</script>
+import { computed } from '@vue/reactivity';
+import { onMounted, ref } from 'vue';
+import { AppState } from '../AppState.js';
+import { eventsService } from '../services/EventsService.js';
+import { logger } from '../utils/Logger.js';
+import Pop from '../utils/Pop.js';
 
-<style scoped lang="scss">
-.home{
-  display: grid;
-  height: 80vh;
-  place-content: center;
-  text-align: center;
-  user-select: none;
-  .home-card{
-    width: 50vw;
-    > img{
-      height: 200px;
-      max-width: 200px;
-      width: 100%;
-      object-fit: contain;
-      object-position: center;
+export default {
+  name: 'Home',
+  setup() {
+    const filterTerm = ref('')
+    async function getAll() {
+      try {
+        await eventsService.getAll();
+      } catch (error) {
+        logger.error("Getting events", error);
+        Pop.error(error)
+      }
     }
+
+    onMounted(() => {
+      getAll();
+    });
+    return {
+      filterTerm,
+      events: computed(() => AppState.events)
+    }
+
   }
 }
-</style>
+</script>
