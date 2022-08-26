@@ -5,6 +5,12 @@
         <ActiveEventCard :event="activeEvent" />
       </div>
     </div>
+    <div>
+      <CommentForm />
+    </div>
+    <div v-for="c in comment" :key="c.id">
+      <CommentCard :comment="c" />
+    </div>
   </div>
 </template>
 
@@ -17,6 +23,9 @@ import { logger } from '../utils/Logger.js';
 import Pop from '../utils/Pop.js';
 import { AppState } from '../AppState.js'
 import EventCard from '../components/EventCard.vue';
+import CommentCard from '../components/CommentCard.vue';
+import CommentForm from '../components/CommentForm.vue';
+import { commentsService } from '../services/CommentsService.js';
 
 export default {
   name: "EventdetailsPage",
@@ -31,13 +40,23 @@ export default {
         Pop.error(error);
       }
     }
+    async function getEventComments() {
+      try {
+        await commentsService.getCommentsByEventId(route.params.eventId);
+      } catch (error) {
+        logger.error("Getting events", error);
+        Pop.error(error)
+      }
+    }
     onMounted(() => {
       getActiveEvent();
+      getEventComments();
     });
     return {
-      activeEvent: computed(() => AppState.activeEvent)
+      activeEvent: computed(() => AppState.activeEvent),
+      comment: computed(() => AppState.comments)
     };
   },
-  components: { EventCard }
+  components: { EventCard, CommentCard, CommentForm }
 }
 </script>
