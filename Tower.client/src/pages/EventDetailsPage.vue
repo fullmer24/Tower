@@ -1,6 +1,6 @@
 <template>
   <div class="eventDetails">
-    <div class="bg-dark">
+    <div class="bg-dark p-2">
       <div>
         <ActiveEventCard :event="activeEvent" />
       </div>
@@ -22,8 +22,6 @@ export default {
   name: "EventdetailsPage",
   setup() {
     const route = useRoute();
-    // TODO on mount get the event at the route param eventId
-    // look at gregslist car page for reference
     async function getActiveEvent() {
       try {
         await eventsService.getActiveEvent(route.params.eventId);

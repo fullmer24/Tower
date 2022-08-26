@@ -7,7 +7,6 @@ import { api } from "./AxiosService.js"
 class EventsService {
     async getAll() {
         const res = await api.get('api/events')
-        logger.log('got events', res.data)
         AppState.events = res.data
     }
 

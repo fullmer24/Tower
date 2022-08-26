@@ -2,7 +2,7 @@
     <div class="event-card card">
         <div class="card-body">
             <div class="bg-light border elevation-2 rounded selectable">
-                <div class="p-1">
+                <div class="p-2">
                     <img class="img-fluid" :src="event.coverImg" alt="">
                     <h1 class="text-dark">{{ event.name }}</h1>
                     <h2 class="text-dark">{{ event.type }}</h2>
