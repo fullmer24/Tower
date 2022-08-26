@@ -6,6 +6,7 @@
       </div>
       <div class="col-md-6">
         <div class="row">
+          <!-- v-if="activeEvent.capacity >= 0" -->
           <div class="col-2">
             <button v-if="!ticket" class="btn btn-info" @click="ticket"><i class="mdi mdi-ticket"></i>
               Attend</button>
