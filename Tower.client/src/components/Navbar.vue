@@ -11,11 +11,11 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav me-auto">
-        <!-- <li>
-          <router-link :to="{ name: 'EventDetails' }" class="btn text-success lighten-30 selectable text-uppercase">
-            About
+        <li>
+          <router-link :to="{ name: 'Account' }" class="btn text-success lighten-30 selectable text-uppercase">
+            Account
           </router-link>
-        </li> -->
+        </li>
       </ul>
       <button type="button" class="btn btn-primary btn-lg p-2 m-4" data-bs-toggle="modal"
         data-bs-target="#create-event">

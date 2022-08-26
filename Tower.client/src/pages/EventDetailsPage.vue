@@ -1,8 +1,25 @@
 <template>
   <div class="eventDetails">
-    <div class="bg-dark p-2">
-      <div>
+    <div class="row bg-dark p-2">
+      <div class="col-md-6">
         <ActiveEventCard :event="activeEvent" />
+      </div>
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-2">
+            <button v-if="!ticket" class="btn btn-info" @click="ticket"><i class="mdi mdi-ticket"></i>
+              Attend</button>
+            <button v-else class="btn btn-danger" @click="removeTicket"><i class="mdi mdi-delete"></i>
+              Unattend</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-7">
+        <div class="row">
+          <div v-for="t in ticketEvents" class="col-2">
+            <img class="img-fluid rounded elevation-2" :src="t.profile.picture" :title="t.profile.name">
+          </div>
+        </div>
       </div>
     </div>
     <div>
@@ -19,6 +36,7 @@ import { computed } from '@vue/reactivity';
 import { onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { eventsService } from '../services/EventsService.js';
+import { ticketsService } from '../services/TicketsService.js';
 import { logger } from '../utils/Logger.js';
 import Pop from '../utils/Pop.js';
 import { AppState } from '../AppState.js'
@@ -48,13 +66,50 @@ export default {
         Pop.error(error)
       }
     }
+    async function getProfileTickets() {
+      try {
+        await ticketsService.getProfileTickets(route.params.eventId)
+      } catch (error) {
+        logger.error('GETTING PROFILE TICKETS', error)
+        Pop.error(error)
+      }
+    }
     onMounted(() => {
       getActiveEvent();
       getEventComments();
+      getProfileTickets();
     });
     return {
       activeEvent: computed(() => AppState.activeEvent),
-      comment: computed(() => AppState.comments)
+      comment: computed(() => AppState.comments),
+      ticketProfiles: computed(() => AppState.ticketProfiles),
+      ticketEvents: computed(() => AppState.ticketEvents),
+      ticket: computed(() => {
+        if (AppState.ticketProfiles.find(t => t.accountId == AppState.account.id)) {
+          return true
+        }
+        return false
+      }),
+      async ticket() {
+        try {
+          let newTicket = {
+            eventId: AppState.activeEvent.id,
+            accountId: AppState.account.id
+          }
+          logger.log('ticket', newTicket)
+          await ticketsService.create(newTicket)
+        } catch (error) {
+          Pop.error(error)
+        }
+      },
+      async removeTicket() {
+        try {
+          let ticketToRemove = AppState.ticketProfiles.find(t => t.accountId == AppState.account.id)
+          await ticketsService.removeTicket(ticketToRemove.id)
+        } catch (error) {
+          Pop.error(error)
+        }
+      }
     };
   },
   components: { EventCard, CommentCard, CommentForm }

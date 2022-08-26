@@ -30,17 +30,19 @@ import { AppState } from '../AppState.js';
 import { eventsService } from '../services/EventsService.js';
 import { logger } from '../utils/Logger.js';
 import Pop from '../utils/Pop.js';
+import TicketCard from '../components/TicketCard.vue';
 
 export default {
-  name: 'Home',
+  name: "Home",
   setup() {
-    const filterTerm = ref('')
+    const filterTerm = ref("");
     async function getAll() {
       try {
         await eventsService.getAll();
-      } catch (error) {
+      }
+      catch (error) {
         logger.error("Getting events", error);
-        Pop.error(error)
+        Pop.error(error);
       }
     }
 
@@ -49,9 +51,10 @@ export default {
     });
     return {
       filterTerm,
-      events: computed(() => AppState.events.filter(e => filterTerm.value ? e.type == filterTerm.value : true))
-    }
-
-  }
+      events: computed(() => AppState.events.filter(e => filterTerm.value ? e.type == filterTerm.value : true)),
+      eventTickets: computed(() => AppState.ticketProfiles)
+    };
+  },
+  components: { TicketCard }
 }
 </script>
