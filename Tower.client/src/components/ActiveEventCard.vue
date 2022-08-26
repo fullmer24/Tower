@@ -6,7 +6,7 @@
                     <div class="p-2">
                         <img class="img-fluid" :src="event.coverImg" alt="">
                     </div>
-                    <div v-if="event.capacity > 0" class="col-6">
+                    <div v-if="event.capacity > 0" class="col-md-6">
                         <h1 class="text-dark">{{ event.name }}</h1>
                         <h2 class="text-dark">{{ event.type }}</h2>
                         <h3 class="text-dark">{{ event.startDate }}</h3>
@@ -15,7 +15,7 @@
                         <p class="text-dark">{{ event.capacity }}</p>
                     </div>
                     <h2 v-else class="bg-warning text-danger border elevation-2 rounded">EVENT SOLD OUT</h2>
-                    <div class="col-6">
+                    <div class="col-md-6">
                         <button v-if="event.creatorId == account.id && event.isCanceled == false"
                             @click="cancelEvent(event)" class="btn btn-danger">
                             Cancel
