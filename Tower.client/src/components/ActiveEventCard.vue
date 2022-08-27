@@ -9,6 +9,7 @@
                     <div v-if="event.capacity > 0" class="col-md-6">
                         <h1 class="text-dark">{{ event.name }}</h1>
                         <h2 class="text-dark">{{ event.type }}</h2>
+                        <!-- TODO clean up date here, use new Date(event.startDate) -->
                         <h3 class="text-dark">{{ event.startDate }}</h3>
                         <p class="text-dark">{{ event.description }}</p>
                         <p class="text-dark">{{ event.location }}</p>

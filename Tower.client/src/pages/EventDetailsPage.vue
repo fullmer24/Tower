@@ -6,9 +6,9 @@
       </div>
       <div class="col-md-6">
         <div class="row">
-          <!-- v-if="activeEvent.capacity >= 0" -->
-          <div class="col-2">
-            <button v-if="!ticket" class="btn btn-info" @click="ticket"><i class="mdi mdi-ticket"></i>
+          <!-- TODO   vvvvvvv   check to see if the event is also cancelled here "&&" -->
+          <div v-if="activeEvent.capacity > 0" class="col-2">
+            <button v-if="!ticket" class="btn btn-info" @click="getTicket"><i class="mdi mdi-ticket"></i>
               Attend</button>
             <button v-else class="btn btn-danger" @click="removeTicket"><i class="mdi mdi-delete"></i>
               Unattend</button>
@@ -86,12 +86,13 @@ export default {
       ticketProfiles: computed(() => AppState.ticketProfiles),
       ticketEvents: computed(() => AppState.ticketEvents),
       ticket: computed(() => {
+        // TODO       vvvv Make sure we are checking the ticketEvents array instead of my tickets. Once this is working correctly, I should be able to delete whenever I want to
         if (AppState.ticketProfiles.find(t => t.accountId == AppState.account.id)) {
           return true
         }
         return false
       }),
-      async ticket() {
+      async getTicket() {
         try {
           let newTicket = {
             eventId: AppState.activeEvent.id,
