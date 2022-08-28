@@ -13,6 +13,7 @@
                         <p class="text-dark">{{ event.description }}</p>
                         <p class="text-dark">{{ event.location }}</p>
                         <p class="text-dark">{{ event.capacity }}</p>
+                        <p class="text-dark">{{ event.isCanceled }}</p>
                     </div>
                     <h2 v-else class="bg-warning text-danger border elevation-2 rounded">EVENT SOLD OUT</h2>
                     <div class="col-md-6">
