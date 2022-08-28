@@ -8,5 +8,6 @@ export class Event {
         this.capacity = data.capacity || 0
         this.startDate = data.startDate || ''
         this.type = data.type || ''
+        this.isCanceled = data.isCanceled || false
     }
 }

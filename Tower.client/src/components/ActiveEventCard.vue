@@ -15,7 +15,7 @@
                         <p class="text-dark">{{ event.capacity }}</p>
                         <p class="text-dark">{{ event.isCanceled }}</p>
                     </div>
-                    <h2 v-else class="bg-warning text-danger border elevation-2 rounded">EVENT SOLD OUT</h2>
+                    <h2 v-else class="bg-warning text-dark border elevation-2 rounded">EVENT SOLD OUT</h2>
                     <div class="col-md-6">
                         <button title="Cancel" v-if="event.creatorId == account.id && event.isCanceled == false"
                             @click="cancelEvent(event)" class="btn btn-danger">
@@ -25,7 +25,7 @@
                 </div>
             </div>
             <div v-if="event.isCanceled == true" class="bg-warning border elevation-2 rounded">
-                <h2 class=" text-danger">EVENT CANCELED</h2>
+                <h2 class=" text-dark">EVENT CANCELED</h2>
             </div>
 
 
