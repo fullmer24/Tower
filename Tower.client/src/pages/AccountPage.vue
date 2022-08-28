@@ -7,7 +7,8 @@
     <div v-for="t in tickets" :key="t.id" class=" card col-md-3 p-2 m-2">
       {{ t.event?.name }}
       {{ new Date(t.event?.startDate).toLocaleDateString() }}
-      <button class="btn btn-danger" @click="removeTicket"><i class="mdi mdi-delete-forever"></i></button>
+      <button class="btn btn-danger" @click="removeTicket" title="delete"><i
+          class="mdi mdi-delete-forever"></i></button>
 
     </div>
   </div>
