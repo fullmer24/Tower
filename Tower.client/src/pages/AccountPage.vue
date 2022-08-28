@@ -1,20 +1,17 @@
 <template>
-  <div class="about text-center">
-    <h1>Welcome {{ account.name }}</h1>
-    <img class="rounded" :src="account.picture" alt="" />
-    <p>{{ account.email }}</p>
-    <div class="row">
-      <div class="col-12">
-        <h2>Your Events</h2>
-      </div>
-      <div v-for="t in tickets" :key="t.id" class=" card col-md-3 p-2 m-2">
-        {{ t.event?.name }}
-        {{ t.event?.startDate }}
-        <button class="btn btn-danger" @click="removeTickets"><i class="mdi mdi-delete-forever"></i></button>
 
-      </div>
+  <div class="row">
+    <div class="col-12">
+      <h2>Your Events</h2>
+    </div>
+    <div v-for="t in tickets" :key="t.id" class=" card col-md-3 p-2 m-2">
+      {{ t.event?.name }}
+      {{ new Date(t.event?.startDate).toLocaleDateString() }}
+      <button class="btn btn-danger" @click="removeTicket"><i class="mdi mdi-delete-forever"></i></button>
+
     </div>
   </div>
+
 </template>
 
 <script>
@@ -43,6 +40,14 @@ export default {
       async removeTicket() {
         try {
           await ticketsService.removeTicket(props.ticket.id)
+        } catch (error) {
+          Pop.error(error)
+        }
+      },
+      async removeTicket() {
+        try {
+          let ticketToRemove = AppState.ticketProfiles.find(t => t.accountId == AppState.account.id)
+          await ticketsService.removeTicket(ticketToRemove.id)
         } catch (error) {
           Pop.error(error)
         }
