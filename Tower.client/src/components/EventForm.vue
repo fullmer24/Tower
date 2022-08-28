@@ -72,7 +72,6 @@ export default {
             async handleSubmit() {
                 try {
                     logger.log('creating event', editable.value)
-                    debugger
                     const tEvent = await eventsService.createEvent(editable.value)
                     Modal.getOrCreateInstance("#create-event").hide()
                     Pop.toast('Event Created!')

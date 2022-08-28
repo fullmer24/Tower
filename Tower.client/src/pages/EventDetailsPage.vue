@@ -10,8 +10,8 @@
           <div v-if="activeEvent.capacity > 0" class="col-2">
             <button v-if="!ticket" class="btn btn-info" @click="getTicket"><i class="mdi mdi-ticket"></i>
               Attend</button>
-            <button v-else class="btn btn-danger" @click="removeTicket"><i class="mdi mdi-delete"></i>
-              Unattend</button>
+            <!-- <button v-else class="btn btn-danger" @click="removeTicket"><i class="mdi mdi-delete"></i>
+              Unattend</button> -->
           </div>
         </div>
       </div>

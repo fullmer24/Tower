@@ -7,6 +7,7 @@ class TicketsService {
         const res = await api.post('api/tickets', newTicket)
         logger.log('CREATE TICKET', res.data)
         AppState.ticketProfiles.push(res.data)
+        AppState.ticketEvents.push(res.data)
         // TODO Make sure we also push into the ticketEvents array in our Appstate when we create a ticket. Also make sure we are populating the event and profile on a create in the backend
     }
 
