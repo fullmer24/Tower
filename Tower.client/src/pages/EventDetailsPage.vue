@@ -83,7 +83,6 @@ export default {
       ticketProfiles: computed(() => AppState.ticketProfiles),
       ticketEvents: computed(() => AppState.ticketEvents),
       ticket: computed(() => {
-        // TODO       vvvv Make sure we are checking the ticketEvents array instead of my tickets. Once this is working correctly, I should be able to delete whenever I want to
         if (AppState.ticketProfiles.find(t => t.accountId == AppState.account.id)) {
           return true
         }
