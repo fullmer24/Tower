@@ -17,7 +17,7 @@
                     </div>
                     <h2 v-else class="bg-warning text-danger border elevation-2 rounded">EVENT SOLD OUT</h2>
                     <div class="col-md-6">
-                        <button v-if="event.creatorId == account.id && event.isCanceled == false"
+                        <button title="Cancel" v-if="event.creatorId == account.id && event.isCanceled == false"
                             @click="cancelEvent(event)" class="btn btn-danger">
                             Cancel
                         </button>

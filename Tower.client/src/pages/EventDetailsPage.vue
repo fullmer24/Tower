@@ -7,7 +7,7 @@
       <div class="col-md-6">
         <div class="row">
           <div v-if="activeEvent.capacity > 0 && activeEvent.isCanceled != true" class="col-2">
-            <button v-if="!ticket" class="btn btn-info" @click="getTicket"><i class="mdi mdi-ticket"></i>
+            <button title="Attend" v-if="!ticket" class="btn btn-info" @click="getTicket"><i class="mdi mdi-ticket"></i>
               Attend</button>
           </div>
         </div>

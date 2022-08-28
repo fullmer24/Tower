@@ -9,12 +9,18 @@
       <div class="col-12 p-1">
         filter <i class="mdi mdi-filter"></i>
       </div>
-      <div class="col-md-2 btn btn-outline-light rounded-pill p-2" @click="filterTerm = ''">All</div>
-      <div class="col-md-2 btn btn-outline-light rounded-pill p-2" @click="filterTerm = 'concert'">Concert</div>
-      <div class="col-md-2 btn btn-outline-light rounded-pill p-2" @click="filterTerm = 'convention'">Convention</div>
-      <div class="col-md-2 btn btn-outline-light rounded-pill p-2" @click="filterTerm = 'sport'">Sport</div>
-      <div class="col-md-2 btn btn-outline-light rounded-pill p-2" @click="filterTerm = 'sport'">Sport</div>
-      <div class="col-md-2 btn btn-outline-light rounded-pill p-2" @click="filterTerm = 'digital'">Digital</div>
+      <div title="All" class="col-md-2 btn btn-outline-light rounded-pill p-2" @click="filterTerm = ''">All</div>
+      <div title="Concert" class="col-md-2 btn btn-outline-light rounded-pill p-2" @click="filterTerm = 'concert'">
+        Concert
+      </div>
+      <div title="Convention" class="col-md-2 btn btn-outline-light rounded-pill p-2"
+        @click="filterTerm = 'convention'">
+        Convention</div>
+      <div title="Sport" class="col-md-2 btn btn-outline-light rounded-pill p-2" @click="filterTerm = 'sport'">Sport
+      </div>
+      <div title="Digital" class="col-md-2 btn btn-outline-light rounded-pill p-2" @click="filterTerm = 'digital'">
+        Digital
+      </div>
     </div>
     <div class="row bg-dark p-2">
       <div class="col-md-3" v-for="e in events" :key="e.id">
