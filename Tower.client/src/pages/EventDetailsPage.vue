@@ -10,6 +10,9 @@
             <button title="Attend" v-if="!ticket" class="btn btn-info" @click="getTicket"><i class="mdi mdi-ticket"></i>
               Attend</button>
           </div>
+          <div>
+            <p>See Account for your tickets</p>
+          </div>
         </div>
       </div>
       <div class="col-7">

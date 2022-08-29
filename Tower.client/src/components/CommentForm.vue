@@ -2,7 +2,7 @@
     <form @submit.prevent="handleSubmit">
         <p>ADD COMMENT</p>
         <input type="text" placeholder="Your comment here" v-model="editable.body">
-        <button>Submit</button>
+        <button title="Submit">Submit</button>
     </form>
 </template>
 
